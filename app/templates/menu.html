@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #199e69;
+        }
+        .menu-container {
+            margin-top: 50px;
+        }
+        .menu-btn {
+            width: 100%;
+            margin: 5px 0;
+        }
+        .category-title {
+            margin-top: 20px;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container menu-container">
+        <h1 class="mb-4 text-center">Menú Principal</h1>
+
+        <!-- Categoría: Reportes -->
+        <h2 class="category-title">Reportes</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="{{ url_for('imprimir_presupuesto') }}" class="btn btn-info menu-btn">Imprimir Presup.</a>
+
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('saldos_generales') }}" class="btn btn-info menu-btn">Saldos Generales</a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('balance_general') }}" class="btn btn-info menu-btn">Balance General</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/estado-resultados" class="btn btn-info menu-btn">Estado Resultados</a>
+            </div>
+        </div>
+
+        <!-- Categoría: Pólizas -->
+        <h2 class="category-title">Pólizas</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/poliza-ingresos" class="btn btn-primary menu-btn">Póliza Ingresos</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/poliza-cheques" class="btn btn-primary menu-btn">Póliza Cheques</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/poliza-diario" class="btn btn-primary menu-btn">Póliza Diario</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/editar-polizas" class="btn btn-primary menu-btn">Editar Pólizas</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/consultar-polizas" class="btn btn-primary menu-btn">Consultar Pólizas</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/imprimir-polizas" class="btn btn-primary menu-btn">Imprimir Pólizas</a>
+            </div>
+        </div>
+
+        <!-- Categoría: Catálogos y Cuentas -->
+        <h2 class="category-title">Catálogos y Cuentas</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/catalogos-cuentas" class="btn btn-success menu-btn">Catálogos Cuentas</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/ingresar-saldos" class="btn btn-success menu-btn">Ingresar Saldos</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/presupuesto" class="btn btn-success menu-btn">Presupuesto</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/mayor" class="btn btn-success menu-btn">Mayor</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/mayor-res" class="btn btn-success menu-btn">Mayor Res.</a>
+            </div>
+        </div>
+
+        <!-- Nueva Categoría: Gestión de Usuarios -->
+        <h2 class="category-title">Gestión de Usuarios</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/gestion-usuarios" class="btn btn-dark menu-btn">Gestión de Usuarios</a>
+            </div>
+        </div>
+
+        <!-- Nueva Categoría: Ingreso Diario -->
+        <h2 class="category-title">Ingreso Diario por Sucursal</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/ingreso-diario-sucursal" class="btn btn-secondary menu-btn">Ingreso Diario</a>
+            </div>
+        </div>
+
+        <!-- Opción para Salir -->
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/" class="btn btn-danger menu-btn">Salir</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

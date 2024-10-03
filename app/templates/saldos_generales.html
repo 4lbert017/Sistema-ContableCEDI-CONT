@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saldos Generales</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-process {
+            width: 100%;
+        }
+        .btn-exit {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .form-check-inline {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2 class="text-center">Saldos Generales</h2>
+        <form method="POST" action="/procesar_saldos">
+            <div class="form-group row mt-4">
+                <label for="year" class="col-sm-2 col-form-label">Año:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="year" name="year">
+                        <option value="2023">2023</option>
+                        <option value="2024" selected>2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group mt-4">
+                <label>Tipo de saldo:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="saldo_tipo" id="todos" value="todos" checked>
+                    <label class="form-check-label" for="todos">Todos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="saldo_tipo" id="ingresos" value="ingresos">
+                    <label class="form-check-label" for="ingresos">Ingresos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="saldo_tipo" id="egresos" value="egresos">
+                    <label class="form-check-label" for="egresos">Egresos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="saldo_tipo" id="pasivos" value="pasivos">
+                    <label class="form-check-label" for="pasivos">Pasivos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="saldo_tipo" id="activos" value="activos">
+                    <label class="form-check-label" for="activos">Activos</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="saldo_tipo" id="capital" value="capital">
+                    <label class="form-check-label" for="capital">Capital</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-process mt-4">Procesar</button>
+
+            <!-- Botón de Salir que redirige al menú -->
+            <a href="/menu" class="btn btn-secondary btn-exit">Salir</a>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
