@@ -1,17 +1,30 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy  # Importa SQLAlchemy
 
 app = Flask(__name__)
 
-# Configuración de MySQL
+# Configuración de MySQL para flask_mysqldb
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'sistemacontable'
-app.config['MYSQL_PORT'] = 5000  
+app.config['MYSQL_PORT'] = 3306
 
 mysql = MySQL(app)
 
+# Configuración de SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/sistemacontable'  # Cambia la URI según tu configuración
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)  # Inicia la instancia de SQLAlchemy
+
+# Ejemplo de un modelo usando SQLAlchemy
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    rol = db.Column(db.String(50), nullable=False)
 
 # Configuración de la aplicación
 app.secret_key = 'mysecretkey'
@@ -27,7 +40,7 @@ def auth():
     
     # Consultar la base de datos para verificar las credenciales
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM usuarios WHERE username = %s AND password = %s", (username, password))
+    cur.execute("SELECT * FROM usuarios WHERE nombre_usuario = %s AND contraseña = %s", (username, password))
     user = cur.fetchone()
     cur.close()
 
@@ -55,7 +68,7 @@ def saldos_generales():
         return f"Procesando saldos del {year}, tipo {saldo_tipo}"
     return render_template('saldos_generales.html')
 
-@app.route('/Balance_General', methods=['GET', 'POST'])
+@app.route('/balance_general', methods=['GET', 'POST'])
 def balance_general():
     if request.method == 'POST':
         # Procesar los datos enviados desde el formulario
