@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Usuarios</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .admin-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            background-color: white;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .header img {
+            width: 100px;
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .form-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-form {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .user-list {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn-save {
+            background-color: #00c1c1;
+            color: white;
+            width: 100%;
+        }
+
+        .user-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .user-table td {
+            vertical-align: middle;
+        }
+
+        .btn-update {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container admin-container">
+        <!-- Header -->
+        <div class="header">
+            <img src="/static/img/logo_cedicom.png" alt="Logo CEDICOM">
+            <h1>ADMIN USUARIOS</h1>
+            <img src="/static/img/logo_ISO.png" alt="Logo ISO" width="100">
+        </div>
+
+        <!-- Formulario -->
+        <div class="form-section">
+            <div class="user-form">
+                <i class="icon fas fa-user-plus"></i>
+                <select class="form-control" id="userSelect">
+                    <option value="usuario">usuario</option>
+                </select>
+                <input type="password" class="form-control" id="password" placeholder="************">
+                <select class="form-control" id="roleSelect">
+                    <option value="Admin">Admin</option>
+                    <option value="Usuario1">Usuario1</option>
+                </select>
+                <button type="button" class="btn btn-save">Guardar</button>
+            </div>
+
+            <!-- Tabla de usuarios -->
+            <div class="user-list">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Contraseña</th>
+                            <th>Rol</th>
+                            <th colspan="2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Victor</td>
+                            <td>**********</td>
+                            <td>Admin</td>
+                            <td><button class="btn btn-update">Actualizar</button></td>
+                            <td><button class="btn btn-delete">Eliminar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Carlos</td>
+                            <td>**********</td>
+                            <td>Usuario1</td>
+                            <td><button class="btn btn-update">Actualizar</button></td>
+                            <td><button class="btn btn-delete">Eliminar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
