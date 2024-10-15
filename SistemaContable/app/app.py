@@ -90,7 +90,28 @@ def test_db_connection():
     
 @app.route('/admin-usuarios')
 def admin_usuarios():
-    return render_template('admin_usuarios.html')  
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM usuarios")
+    users = cur.fetchall()
+    cur.close()
+
+    return render_template('admin_usuarios.html', users=users)
+
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    role = data['role']
+
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO usuarios (nombre_usuario, contraseña, rol) VALUES (%s, %s, %s)", (username, password, role))
+    mysql.connection.commit()
+    cur.close()
+
+    return {'success': True}
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+

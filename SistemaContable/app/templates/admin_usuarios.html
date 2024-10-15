@@ -40,18 +40,13 @@
 
         .form-section {
             display: flex;
-            align-items: center;
+            justify-content: space-between; /* Para separar el formulario y la tabla */
+            gap: 20px; /* Añade un espacio entre el formulario y la tabla */
             margin-bottom: 20px;
         }
 
-        .user-form {
-            width: 50%;
-            padding: 20px;
-        }
-
-        .user-list {
-            width: 50%;
-            padding: 20px;
+        .user-form, .user-list {
+            flex-grow: 1; /* Para que ambos tomen el mismo ancho */
         }
 
         .form-control {
@@ -64,15 +59,25 @@
             width: 100%;
         }
 
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            padding: 10px 20px;
+        }
+
         .user-table {
             width: 100%;
             margin-top: 20px;
+            border-collapse: collapse;
         }
 
-        .user-table th,
-        .user-table td {
+        .user-table th, .user-table td {
             padding: 10px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         .user-table td {
@@ -82,11 +87,15 @@
         .btn-update {
             background-color: #28a745;
             color: white;
+            border: none;
+            padding: 5px 10px;
         }
 
         .btn-delete {
             background-color: #dc3545;
             color: white;
+            border: none;
+            padding: 5px 10px;
         }
 
         .icon {
@@ -105,53 +114,82 @@
             <img src="/static/img/logo_ISO.png" alt="Logo ISO" width="100">
         </div>
 
-        <!-- Formulario -->
+        <!-- Formulario y Tabla -->
         <div class="form-section">
+            <!-- Formulario de usuarios -->
             <div class="user-form">
                 <i class="icon fas fa-user-plus"></i>
-                <select class="form-control" id="userSelect">
-                    <option value="usuario">usuario</option>
-                </select>
+                <input type="text" class="form-control" id="userInput" placeholder="Nombre de usuario">
                 <input type="password" class="form-control" id="password" placeholder="************">
                 <select class="form-control" id="roleSelect">
                     <option value="Admin">Admin</option>
                     <option value="Usuario1">Usuario1</option>
                 </select>
-                <button type="button" class="btn btn-save">Guardar</button>
+                <button type="button" class="btn btn-save" onclick="addUser()">Guardar</button>
+
+<script>
+    function addUser() {
+        const username = document.getElementById('userInput').value;
+        const password = document.getElementById('password').value;
+        const role = document.getElementById('roleSelect').value;
+
+        fetch('/add_user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, password: password, role: role }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();  // Recargar la página para ver el nuevo usuario
+            } else {
+                alert('Error al añadir el usuario.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
             </div>
 
             <!-- Tabla de usuarios -->
             <div class="user-list">
-                <table class="user-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Usuario</th>
                             <th>Contraseña</th>
                             <th>Rol</th>
-                            <th colspan="2">Acciones</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for user in users %}
                         <tr>
-                            <td>Victor</td>
-                            <td>**********</td>
-                            <td>Admin</td>
-                            <td><button class="btn btn-update">Actualizar</button></td>
-                            <td><button class="btn btn-delete">Eliminar</button></td>
+                            <td>{{ user[1] }}</td> <!-- username -->
+                            <td>**********</td> <!-- Aquí puedes poner la contraseña encriptada o un placeholder -->
+                            <td>{{ user[3] }}</td> <!-- rol -->
+                            <td>
+                                <button class="btn btn-success">Actualizar</button>
+                                <button class="btn btn-danger">Eliminar</button>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Carlos</td>
-                            <td>**********</td>
-                            <td>Usuario1</td>
-                            <td><button class="btn btn-update">Actualizar</button></td>
-                            <td><button class="btn btn-delete">Eliminar</button></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
+                
             </div>
         </div>
 
     </div>
+
+    <!-- Botón de regresar al final -->
+    <button type="button" class="btn btn-back" onclick="window.location.href='/menu';">Regresar</button>
+    
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
