@@ -40,13 +40,13 @@
 
         .form-section {
             display: flex;
-            justify-content: space-between; /* Para separar el formulario y la tabla */
-            gap: 20px; /* Añade un espacio entre el formulario y la tabla */
+            justify-content: space-between;
+            gap: 20px;
             margin-bottom: 20px;
         }
 
         .user-form, .user-list {
-            flex-grow: 1; /* Para que ambos tomen el mismo ancho */
+            flex-grow: 1;
         }
 
         .form-control {
@@ -152,6 +152,39 @@
             console.error('Error:', error);
         });
     }
+
+    function updateUser(userId) {
+        const updatedUsername = prompt("Nuevo nombre de usuario:");
+        const updatedPassword = prompt("Nueva contraseña:");
+        const updatedRole = prompt("Nuevo rol:");
+
+        if (updatedUsername && updatedPassword && updatedRole) {
+            fetch(`/update_user/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: updatedUsername,
+                    password: updatedPassword,
+                    role: updatedRole,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();  // Recargar la página para ver los cambios
+                } else {
+                    alert('Error al actualizar el usuario.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    }
+
+    
 </script>
 
             </div>
@@ -171,17 +204,19 @@
                         {% for user in users %}
                         <tr>
                             <td>{{ user[1] }}</td> <!-- username -->
-                            <td>**********</td> <!-- Aquí puedes poner la contraseña encriptada o un placeholder -->
+                            <td>**********</td> <!-- Placeholder para la contraseña -->
                             <td>{{ user[3] }}</td> <!-- rol -->
                             <td>
-                                <button class="btn btn-success">Actualizar</button>
-                                <button class="btn btn-danger">Eliminar</button>
+                                <button class="btn btn-update" onclick="updateUser('{{ user[0] }}')">Actualizar</button>
+                                <button class="btn btn-delete" onclick="deleteUser('{{ user[0] }}')">Eliminar</button>
+
+                                
+                                
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                
             </div>
         </div>
 
@@ -189,7 +224,6 @@
 
     <!-- Botón de regresar al final -->
     <button type="button" class="btn btn-back" onclick="window.location.href='/menu';">Regresar</button>
-    
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

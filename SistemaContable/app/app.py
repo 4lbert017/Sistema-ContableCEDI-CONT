@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
-from flask_sqlalchemy import SQLAlchemy  # Importa SQLAlchemy
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -12,19 +12,6 @@ app.config['MYSQL_DB'] = 'sistemacontable'
 app.config['MYSQL_PORT'] = 3306
 
 mysql = MySQL(app)
-
-# Configuración de SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/sistemacontable'  # Cambia la URI según tu configuración
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)  # Inicia la instancia de SQLAlchemy
-
-# Ejemplo de un modelo usando SQLAlchemy
-class Usuario(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    rol = db.Column(db.String(50), nullable=False)
 
 # Configuración de la aplicación
 app.secret_key = 'mysecretkey'
@@ -45,26 +32,33 @@ def auth():
     cur.close()
 
     if user:
-        return redirect(url_for('menu'))  # Redirige al menú
+        return redirect(url_for('menu'))  
     else:
         flash('Usuario o contraseña incorrectos')
         return redirect(url_for('login'))
 
 @app.route('/menu')
 def menu():
-    return render_template('menu.html')  # Renderiza la plantilla del menú
+    return render_template('menu.html') 
 
 # Ruta para Imprimir Presupuesto
 @app.route('/imprimir-presupuesto')
 def imprimir_presupuesto():
     return render_template('imprimir_presupuesto.html')
 
+@app.route('/guardar_ingresos_egresos', methods=['GET','POST'])
+def guardar_ingresos_egresos():
+    #AQUI VA LA LOGICA
+    flash('Datos guardados exitosamente')
+    return render_template('guardar_ingresos_egresos.html')
+
+
+
 @app.route('/saldos_generales', methods=['GET', 'POST'])
 def saldos_generales():
     if request.method == 'POST':
         year = request.form['year']
         saldo_tipo = request.form['saldo_tipo']
-        # Procesar los datos seleccionados
         return f"Procesando saldos del {year}, tipo {saldo_tipo}"
     return render_template('saldos_generales.html')
 
@@ -73,11 +67,8 @@ def balance_general():
     if request.method == 'POST':
         # Procesar los datos enviados desde el formulario
         pass
-
-    # Renderizar la página de Balance General en caso de GET o después de procesar el POST
     return render_template('Balance_General.html')
 
-# Ruta para probar la conexión a la base de datos
 @app.route('/test-db-connection')
 def test_db_connection():
     try:
@@ -111,7 +102,24 @@ def add_user():
 
     return {'success': True}
 
+@app.route('/update_user/<int:id>', methods=['POST'])
+def update_user(id):
+    data = request.json
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE usuarios SET nombre_usuario = %s, contraseña = %s, rol = %s WHERE id = %s",
+                (data['username'], data['password'], data['role'], id))
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({'success': True})
+
+@app.route('/delete_user/<int:id>', methods=['POST'])
+def delete_user(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM usuarios WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({'success': True})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-
