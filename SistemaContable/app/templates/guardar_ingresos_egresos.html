@@ -8,7 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-image: url('https://wallpaperaccess.com/full/5004735.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         .card {
             border: 1px solid #ccc;
@@ -27,6 +31,20 @@
         button {
             font-size: 18px;
         }
+
+        .form-control {
+        background-color: #d4f5e9; 
+        color: #212529; 
+        border: 1px solid #b2e0c5; 
+    }
+
+    .form-control::placeholder {
+        color: #9ab8a3; 
+    }
+
+    .form-control:read-only {
+        background-color: #e9faf1; 
+    }
     </style>
 </head>
 <body>
@@ -36,13 +54,13 @@
                 <div class="card p-4">
                     <div class="row text-center">
                         <div class="col-md-4">
-                            <img src="/static/img/logo_cedicom.png" alt="Logo CEDICOM">
+                            <img src="/static/img/logo_cedicom.png" alt="Logo CEDICOM" width="100" height="auto">
                         </div>
                         <div class="col-md-4">
                             <h4>INGRESOS/EGRESOS</h4>
                         </div>
                         <div class="col-md-4">
-                            <img src="/static/img/logo_ISO.png" alt="Logo ISO" width="100">
+                            <img src="/static/img/logo_ISO.png" alt="Logo ISO" width="100" height="auto">
                         </div>
                     </div>
                     <hr>
@@ -66,6 +84,7 @@
                                 <div class="mb-3">
                                     <label for="fecha" class="form-label">Fecha:</label>
                                     <input type="date" class="form-control" id="fecha" name="fecha">
+                                    
                                 </div>
 
                                 <div class="mb-3">
