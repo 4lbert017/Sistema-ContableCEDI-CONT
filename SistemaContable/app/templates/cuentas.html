@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Cuentas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/5004735.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .admin-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            background-color: white;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #00c1c1;
+            color: white;
+        }
+
+        .btn-save {
+            background-color: #00c1c1;
+            color: white;
+        }
+
+        .table-bordered {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .btn-warning, .btn-danger, .btn-success {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container admin-container">
+        <div class="header d-flex justify-content-between align-items-center mb-3">
+            <img src="/static/img/logo_cedicom.png" alt="Logo CEDICOM" width="120">
+            <h2 class="text-center flex-grow-1">Gestión de Cuentas</h2>
+            <img src="/static/img/logo_ISO.png" alt="Logo ISO" width="100">
+        </div>
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#accountModal">Crear Nueva Cuenta</button>
+        <!-- Tabla de cuentas -->
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                
+                {% for cuenta in cuentas %}
+                <tr>
+                    <td>{{ cuenta[1] }}</td> <!-- nombre -->
+                    <td>{{ cuenta[2] }}</td> <!-- tipo -->
+                    <td>{{ cuenta[3] }}</td> <!-- descripción -->
+                    <td>
+                        <!-- Botón para Editar -->
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editAccountModal{{ cuenta[0] }}">Editar</button>
+                        
+                        <!-- Formulario para Eliminar -->
+                        <form action="{{ url_for('eliminar_cuenta', id=cuenta[0]) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>                    
+                </tr>
+                
+                <!-- Modal para Editar Cuenta -->
+                <div class="modal fade" id="editAccountModal{{ cuenta[0] }}" tabindex="-1" role="dialog" aria-labelledby="editAccountModalLabel{{ cuenta[0] }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Editar Cuenta</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ url_for('editar_cuenta', id=cuenta[0]) }}" method="POST">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre de la cuenta:</label>
+                                        <input type="text" class="form-control" name="nombre" value="{{ cuenta[1] }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipo">Tipo de cuenta:</label>
+                                        <select class="form-control" name="tipo" required>
+                                            <option value="activo" {% if cuenta[2] == 'activo' %} selected {% endif %}>Activo</option>
+                                            <option value="pasivo" {% if cuenta[2] == 'pasivo' %} selected {% endif %}>Pasivo</option>
+                                            <option value="egreso" {% if cuenta[2] == 'egreso' %} selected {% endif %}>Egreso</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descripcion">Descripción:</label>
+                                        <textarea class="form-control" name="descripcion">{{ cuenta[3] }}</textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Guardar cambios</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal para Crear Cuenta -->
+    <div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountModalLabel">Crear Nueva Cuenta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url_for('crear_cuenta') }}" method="POST">
+                        <div class="form-group">
+                            <label for="nombre">Nombre de la cuenta:</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre de la cuenta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo de cuenta:</label>
+                            <select class="form-control" name="tipo" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="Activo">Activo</option>
+                                <option value="Pasivo">Pasivo</option>
+                                <option value="Egreso">Egreso</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea class="form-control" name="descripcion" rows="3" placeholder="Descripción de la cuenta"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

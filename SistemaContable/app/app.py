@@ -120,6 +120,58 @@ def delete_user(id):
     cur.close()
     return jsonify({'success': True})
 
+# Ruta para ver las cuentas
+@app.route('/cuentas')
+def cuentas():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cuentas")  # Consulta todas las cuentas
+    cuentas = cur.fetchall()
+    cur.close()
+    return render_template('cuentas.html', cuentas=cuentas)
+
+# Ruta para crear una nueva cuenta
+@app.route('/crear_cuenta', methods=['POST'])
+def crear_cuenta():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        tipo = request.form['tipo']
+        descripcion = request.form['descripcion']
+        
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO cuentas (nombre, tipo, descripcion) VALUES (%s, %s, %s)", (nombre, tipo, descripcion))
+        mysql.connection.commit()
+        cur.close()
+        flash('Cuenta creada exitosamente')
+        return redirect(url_for('cuentas'))
+
+# Ruta para editar una cuenta existente
+@app.route('/editar_cuenta/<int:id>', methods=['POST'])
+def editar_cuenta(id):
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        tipo = request.form['tipo']
+        descripcion = request.form['descripcion']
+        
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE cuentas 
+            SET nombre = %s, tipo = %s, descripcion = %s 
+            WHERE id = %s
+        """, (nombre, tipo, descripcion, id))
+        mysql.connection.commit()
+        cur.close()
+        flash('Cuenta actualizada exitosamente')
+        return redirect(url_for('cuentas'))
+
+# Ruta para eliminar una cuenta
+@app.route('/eliminar_cuenta/<int:id>', methods=['POST'])
+def eliminar_cuenta(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM cuentas WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Cuenta eliminada exitosamente')
+    return redirect(url_for('cuentas'))
 
 if __name__ == '__main__':
     app.run(debug=True)
