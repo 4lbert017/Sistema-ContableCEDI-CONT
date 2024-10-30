@@ -173,5 +173,46 @@ def eliminar_cuenta(id):
     flash('Cuenta eliminada exitosamente')
     return redirect(url_for('cuentas'))
 
+# Ruta para crear un nuevo presupuesto
+@app.route('/crear_presupuesto', methods=['GET', 'POST'])
+def crear_presupuesto():
+    if request.method == 'POST':
+        # Código para manejar el formulario cuando se envía (método POST)
+        id_cuenta = request.form['id_cuenta']
+        categoria = request.form['categoria']
+        anio = request.form['anio']
+        monto = request.form['monto']
+        
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO presupuesto (id_cuenta, categoria, año, monto) VALUES (%s, %s, %s, %s)", 
+                    (id_cuenta, categoria, anio, monto))
+        mysql.connection.commit()
+        cur.close()
+        flash('Presupuesto creado exitosamente')
+        return redirect(url_for('presupuestos'))  # Redirige a una página para ver los presupuestos
+    else:
+        # Aquí se maneja el método GET, cuando quieres mostrar la página
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT id, nombre FROM cuentas")  # Consulta para obtener las cuentas
+        cuentas = cur.fetchall()  # Obtenemos las cuentas de la base de datos
+        cur.close()
+
+        print(cuentas)  # Esto imprimirá las cuentas en la consola para verificar
+        return render_template('crear_presupuesto.html', cuentas=cuentas)  # Pasamos las cuentas al template
+
+
+# Ruta para mostrar los presupuestos
+@app.route('/presupuestos')
+def presupuestos():
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT presupuesto.id, cuentas.nombre, presupuesto.categoria, presupuesto.anio, presupuesto.monto 
+        FROM presupuesto 
+        JOIN cuentas ON presupuesto.id_cuenta = cuentas.id
+    """)
+    presupuestos = cur.fetchall()
+    cur.close()
+    return render_template('presupuesto.html', presupuestos=presupuestos)
+
 if __name__ == '__main__':
     app.run(debug=True)

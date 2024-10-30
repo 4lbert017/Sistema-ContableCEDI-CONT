@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Presupuesto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/5004735.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .admin-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            background-color: white;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary, .btn-save {
+            background-color: #00c1c1;
+            color: white;
+        }
+
+        .table-bordered {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .btn-warning, .btn-danger, .btn-success {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container admin-container">
+        <div class="header d-flex justify-content-between align-items-center mb-3">
+            <img src="/static/img/logo_cedicom.png" alt="Logo CEDICOM" width="120">
+            <h2 class="text-center flex-grow-1">Gestión de Presupuesto</h2>
+            <img src="/static/img/logo_ISO.png" alt="Logo ISO" width="100">
+        </div>
+
+        <h2>Crear Presupuesto</h2>
+        <form action="{{ url_for('crear_presupuesto') }}" method="POST">
+            <div class="form-group">
+                <label for="cuenta">Seleccionar cuenta:</label>
+                <select id="cuenta" name="id_cuenta" class="form-control" required>
+                    <option value="" disabled selected>Selecciona una cuenta</option>
+                    {% for cuenta in cuentas %}
+                    <option value="{{ cuenta[0] }}">{{ cuenta[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria" class="form-control" required>
+                    <option value="activo">Activo</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="egreso">Egreso</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="anio">Año:</label>
+                <input type="number" id="anio" name="anio" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="monto">Monto:</label>
+                <input type="number" id="monto" name="monto" class="form-control" step="0.01" required>
+            </div>
+
+            <button type="submit" class="btn btn-save">Guardar Presupuesto</button>
+        </form>
+
+        <hr>
+
+        <h2>Presupuestos Registrados</h2>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cuenta</th>
+                    <th>Categoría</th>
+                    <th>Año</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for presupuesto in presupuestos %}
+                <tr>
+                    <td>{{ presupuesto[0] }}</td>
+                    <td>{{ presupuesto[1] }}</td>
+                    <td>{{ presupuesto[2] }}</td>
+                    <td>{{ presupuesto[3] }}</td>
+                    <td>{{ presupuesto[4] }}</td>
+                    <td>
+                        <a href="/editar_presupuesto/{{ presupuesto[0] }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="/eliminar_presupuesto/{{ presupuesto[0] }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
