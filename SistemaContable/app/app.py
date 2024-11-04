@@ -41,10 +41,28 @@ def auth():
 def menu():
     return render_template('menu.html') 
 
-# Ruta para Imprimir Presupuesto
-@app.route('/imprimir-presupuesto')
+@app.route('/presupuesto')
+def presupuesto():
+    return render_template('presupuesto.html')
+
+@app.route('/polizas')
+def polizas():
+    return render_template('polizas.html')
+
+@app.route('/imprimir_presupuesto')
 def imprimir_presupuesto():
     return render_template('imprimir_presupuesto.html')
+
+@app.route('/crear_presupuesto', methods=['POST'])
+def crear_presupuesto():
+    # Lógica para manejar la creación del presupuesto
+    return redirect(url_for('presupuesto'))
+
+@app.route('/procesar_presupuesto', methods=['POST'])
+def procesar_presupuesto():
+    # Aquí puedes agregar la lógica para procesar el presupuesto
+    # Por ejemplo, podrías recibir el año y tipo de presupuesto y hacer una consulta a la base de datos.
+    return redirect(url_for('presupuesto'))  # Redirige a otra página después de procesar (aqui debe imprimir)
 
 @app.route('/guardar_ingresos_egresos', methods=['GET','POST'])
 def guardar_ingresos_egresos():
@@ -52,6 +70,13 @@ def guardar_ingresos_egresos():
     flash('Datos guardados exitosamente')
     return render_template('guardar_ingresos_egresos.html')
 
+@app.route('/estado_de_resultados')
+def estado_de_resultados():
+    return render_template('estado_de_resultados.html')
+
+@app.route('/imprimir_estado_resultados')
+def imprimir_estado_resultados():
+    return render_template('')
 
 
 @app.route('/saldos_generales', methods=['GET', 'POST'])
@@ -172,47 +197,6 @@ def eliminar_cuenta(id):
     cur.close()
     flash('Cuenta eliminada exitosamente')
     return redirect(url_for('cuentas'))
-
-# Ruta para crear un nuevo presupuesto
-@app.route('/crear_presupuesto', methods=['GET', 'POST'])
-def crear_presupuesto():
-    if request.method == 'POST':
-        # Código para manejar el formulario cuando se envía (método POST)
-        id_cuenta = request.form['id_cuenta']
-        categoria = request.form['categoria']
-        anio = request.form['anio']
-        monto = request.form['monto']
-        
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO presupuesto (id_cuenta, categoria, año, monto) VALUES (%s, %s, %s, %s)", 
-                    (id_cuenta, categoria, anio, monto))
-        mysql.connection.commit()
-        cur.close()
-        flash('Presupuesto creado exitosamente')
-        return redirect(url_for('presupuestos'))  # Redirige a una página para ver los presupuestos
-    else:
-        # Aquí se maneja el método GET, cuando quieres mostrar la página
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT id, nombre FROM cuentas")  # Consulta para obtener las cuentas
-        cuentas = cur.fetchall()  # Obtenemos las cuentas de la base de datos
-        cur.close()
-
-        print(cuentas)  # Esto imprimirá las cuentas en la consola para verificar
-        return render_template('crear_presupuesto.html', cuentas=cuentas)  # Pasamos las cuentas al template
-
-
-# Ruta para mostrar los presupuestos
-@app.route('/presupuestos')
-def presupuestos():
-    cur = mysql.connection.cursor()
-    cur.execute("""
-        SELECT presupuesto.id, cuentas.nombre, presupuesto.categoria, presupuesto.anio, presupuesto.monto 
-        FROM presupuesto 
-        JOIN cuentas ON presupuesto.id_cuenta = cuentas.id
-    """)
-    presupuestos = cur.fetchall()
-    cur.close()
-    return render_template('presupuesto.html', presupuestos=presupuestos)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -120,8 +120,8 @@
                     <td>{{ presupuesto[3] }}</td>
                     <td>{{ presupuesto[4] }}</td>
                     <td>
-                        <a href="/editar_presupuesto/{{ presupuesto[0] }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="/eliminar_presupuesto/{{ presupuesto[0] }}" method="POST" style="display:inline;">
+                        <a href="{{ url_for('editar_presupuesto', id=presupuesto[0]) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ url_for('eliminar_presupuesto', id=presupuesto[0]) }}" method="POST" style="display:inline;">
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                     </td>

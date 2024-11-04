@@ -16,16 +16,20 @@
         .menu-container {
             margin-top: 50px;
         }
+        .menu-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
         .menu-btn {
             width: 100%;
             margin: 5px 0;
         }
         .category-title {
-            margin-top: 20px;
             text-align: center;
-            color: #fff;
-        }
-        .row {
+            font-weight: bold;
+            color: #333;
             margin-bottom: 15px;
         }
     </style>
@@ -33,89 +37,97 @@
 <body>
 
     <div class="container menu-container">
-        <h1 class="mb-4 text-center">Menú Principal</h1>
+        <h1 class="mb-4 text-center text-white">Menú Principal</h1>
 
         <!-- Categoría: Reportes -->
-        <h2 class="category-title">Reportes</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url_for('imprimir_presupuesto') }}" class="btn btn-info menu-btn mb-3">Imprimir Presup.</a>
-            </div>
-            <div class="col-md-6">
-                <a href="{{ url_for('saldos_generales') }}" class="btn btn-info menu-btn mb-3">Saldos Generales</a>
-            </div>
-            <div class="col-md-6">
-                <a href="{{ url_for('balance_general') }}" class="btn btn-info menu-btn mb-3">Balance General</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/estado-resultados" class="btn btn-info menu-btn mb-3">Estado Resultados</a>
+        <div class="menu-card">
+            <h2 class="category-title">Reportes</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url_for('imprimir_presupuesto') }}" class="btn btn-info menu-btn">Imprimir puesto</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ url_for('saldos_generales') }}" class="btn btn-info menu-btn">Saldos Generales</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ url_for('balance_general') }}" class="btn btn-info menu-btn">Balance General</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ url_for('estado_de_resultados') }}" class="btn btn-info menu-btn">Estado De Resultados</a>
+                    
+                </div>
             </div>
         </div>
 
         <!-- Categoría: Pólizas -->
-        <h2 class="category-title">Pólizas</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/poliza-ingresos" class="btn btn-primary menu-btn mb-3">Póliza Ingresos</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/poliza-cheques" class="btn btn-primary menu-btn mb-3">Póliza Cheques</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/poliza-diario" class="btn btn-primary menu-btn mb-3">Póliza Diario</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/editar-polizas" class="btn btn-primary menu-btn mb-3">Editar Pólizas</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/consultar-polizas" class="btn btn-primary menu-btn mb-3">Consultar Pólizas</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/imprimir-polizas" class="btn btn-primary menu-btn mb-3">Imprimir Pólizas</a>
+        <div class="menu-card">
+            <h2 class="category-title">Pólizas</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{{ url_for('polizas') }}" class="btn btn-info menu-btn">Poliza Ingreso</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/poliza-cheques" class="btn btn-primary menu-btn">Póliza Cheques</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/poliza-diario" class="btn btn-primary menu-btn">Póliza Diario</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/editar-polizas" class="btn btn-primary menu-btn">Editar Pólizas</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/consultar-polizas" class="btn btn-primary menu-btn">Consultar Pólizas</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/imprimir-polizas" class="btn btn-primary menu-btn">Imprimir Pólizas</a>
+                </div>
             </div>
         </div>
 
         <!-- Categoría: Catálogos y Cuentas -->
-        <h2 class="category-title">Catálogos y Cuentas</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url_for('cuentas') }}" class="btn btn-info menu-btn mb-3">Catálogos Cuentas</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/ingresar-saldos" class="btn btn-success menu-btn mb-3">Ingresar Saldos</a>
-            </div>
-            <div class="col-md-6">
-                <a href="{{ url_for('presupuestos') }}" class="btn btn-info menu-btn mb-3">presupuesto</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/mayor" class="btn btn-success menu-btn mb-3">Mayor</a>
-            </div>
-            <div class="col-md-6">
-                <a href="/mayor-res" class="btn btn-success menu-btn mb-3">Mayor Res.</a>
-            </div>
-        </div>
-
-        <!-- Nueva Categoría: Gestión de Usuarios -->
-        <h2 class="category-title">Gestión de Usuarios</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url_for('admin_usuarios') }}" class="btn btn-dark menu-btn mb-3">Gestión de Usuarios</a>
+        <div class="menu-card">
+            <h2 class="category-title">Catálogos y Cuentas</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url_for('cuentas') }}" class="btn btn-success menu-btn">Catálogos Cuentas</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/ingresar-saldos" class="btn btn-success menu-btn">Ingresar Saldos</a>
+                </div>
+                <a href="{{ url_for('presupuesto') }}" class="btn btn-success menu-btn">Presupuesto</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/mayor" class="btn btn-success menu-btn">Mayor</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/mayor-res" class="btn btn-success menu-btn">Mayor Resumido</a>
+                </div>
             </div>
         </div>
 
-        <!-- Nueva Categoría: Ingreso Diario -->
-        <h2 class="category-title">Ingreso Diario por Sucursal</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url_for('guardar_ingresos_egresos') }}" class="btn btn-secondary menu-btn mb-3">Ingreso Diario</a>
+        <!-- Categoría: Gestión de Usuarios -->
+        <div class="menu-card">
+            <h2 class="category-title">Gestión de Usuarios</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-dark menu-btn">Gestión de Usuarios</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Ingreso Diario -->
+        <div class="menu-card">
+            <h2 class="category-title">Ingreso Diario por Sucursal</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url_for('guardar_ingresos_egresos') }}" class="btn btn-secondary menu-btn">Ingreso Diario</a>
+                </div>
             </div>
         </div>
 
         <!-- Opción para Salir -->
-        <div class="row">
-            <div class="col-md-6">
-                <a href="/" class="btn btn-danger menu-btn mb-3">Salir</a>
-            </div>
+        <div class="menu-card text-center">
+            <a href="/" class="btn btn-danger menu-btn">Salir</a>
         </div>
     </div>
 

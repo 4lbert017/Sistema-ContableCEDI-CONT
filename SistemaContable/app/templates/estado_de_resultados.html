@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imprimir Presupuesto</title>
+    <title>Estado de Resultados</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -31,23 +31,37 @@
             font-weight: bold;
             color: #555;
         }
-        .btn-process {
+        .btn-print {
             width: 100%;
             margin-top: 15px;
             background-color: #007bff;
             color: white;
-        }
-        .radio-option {
-            display: flex;
-            justify-content: space-between;
         }
     </style>
 </head>
 <body>
 
     <div class="card-container">
-        <h3 class="card-title">Imprimir Presupuesto</h3>
-        <form action="{{ url_for('procesar_presupuesto') }}" method="POST">
+        <h3 class="card-title">Estado de Resultados</h3>
+        <form action="{{ url_for('imprimir_estado_resultados') }}" method="POST">
+            <div class="form-group">
+                <label for="periodo">Período:</label>
+                <select id="periodo" name="periodo" class="form-control" required>
+                    <option value="enero">Enero</option>
+                    <option value="febrero">Febrero</option>
+                    <option value="marzo">Marzo</option>
+                    <option value="abril">Abril</option>
+                    <option value="mayo">Mayo</option>
+                    <option value="junio">Junio</option>
+                    <option value="julio">Julio</option>
+                    <option value="agosto">Agosto</option>
+                    <option value="septiembre">Septiembre</option>
+                    <option value="octubre">Octubre</option>
+                    <option value="noviembre">Noviembre</option>
+                    <option value="diciembre">Diciembre</option>
+                </select>
+            </div>
+            
             <div class="form-group">
                 <label for="year">Año:</label>
                 <select id="year" name="year" class="form-control" required>
@@ -56,30 +70,8 @@
                     {% endfor %}
                 </select>
             </div>
-            
-            <div class="form-group">
-                <label>Tipo:</label>
-                <div class="radio-option">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="tipo" id="todos" value="todos" checked>
-                        <label class="form-check-label" for="todos">Todos</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="tipo" id="ingresos" value="ingresos">
-                        <label class="form-check-label" for="ingresos">Ingresos</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="tipo" id="egresos" value="egresos">
-                        <label class="form-check-label" for="egresos">Egresos</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="tipo" id="activos" value="activos">
-                        <label class="form-check-label" for="activos">Activos</label>
-                    </div>
-                </div>
-            </div>
 
-            <button type="submit" class="btn btn-process">Procesar</button>
+            <button type="submit" class="btn btn-print">Imprimir</button>
         </form>
     </div>
 
