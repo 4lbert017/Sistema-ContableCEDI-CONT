@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Principal</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             background-image: url('https://wallpaperaccess.com/full/5004735.jpg');
@@ -21,16 +22,37 @@
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .menu-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
         }
         .menu-btn {
             width: 100%;
             margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu-btn i {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        .menu-btn:hover {
+            background-color: #0056b3 !important;
+            color: white !important;
         }
         .category-title {
             text-align: center;
             font-weight: bold;
             color: #333;
             margin-bottom: 15px;
+            font-size: 1.5em;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -44,17 +66,16 @@
             <h2 class="category-title">Reportes</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{ url_for('imprimir_presupuesto') }}" class="btn btn-info menu-btn">Imprimir puesto</a>
+                    <a href="{{ url_for('imprimir_presupuesto') }}" class="btn btn-info menu-btn"><i class="fas fa-print"></i> Imprimir Presupuesto</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ url_for('saldos_generales') }}" class="btn btn-info menu-btn">Saldos Generales</a>
+                    <a href="{{ url_for('saldos_generales') }}" class="btn btn-info menu-btn"><i class="fas fa-balance-scale"></i> Saldos Generales</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ url_for('balance_general') }}" class="btn btn-info menu-btn">Balance General</a>
+                    <a href="{{ url_for('balance_general') }}" class="btn btn-info menu-btn"><i class="fas fa-chart-pie"></i> Balance General</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ url_for('estado_de_resultados') }}" class="btn btn-info menu-btn">Estado De Resultados</a>
-                    
+                    <a href="{{ url_for('estado_de_resultados') }}" class="btn btn-info menu-btn"><i class="fas fa-chart-line"></i> Estado De Resultados</a>
                 </div>
             </div>
         </div>
@@ -64,22 +85,22 @@
             <h2 class="category-title">Pólizas</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <a href="{{ url_for('polizas') }}" class="btn btn-info menu-btn">Poliza Ingreso</a>
+                    <a href="{{ url_for('polizas') }}" class="btn btn-primary menu-btn"><i class="fas fa-file-invoice-dollar"></i> Poliza Ingreso</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="{{ url_for('poliza_cheques') }}" class="btn btn-primary menu-btn">Póliza Cheques</a>
+                    <a href="{{ url_for('poliza_cheques') }}" class="btn btn-primary menu-btn"><i class="fas fa-money-check-alt"></i> Póliza Cheques</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/poliza-diario" class="btn btn-primary menu-btn">Póliza Diario</a>
+                    <a href="{{ url_for('poliza_diario') }}" class="btn btn-primary menu-btn"><i class="fas fa-book"></i> Póliza Diario</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/editar-polizas" class="btn btn-primary menu-btn">Editar Pólizas</a>
+                    <a href="{{ url_for('edicion_de_poliza') }}" class="btn btn-primary menu-btn"><i class="fas fa-edit"></i> Editar Pólizas</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/consultar-polizas" class="btn btn-primary menu-btn">Consultar Pólizas</a>
+                    <a href="{{ url_for('consultar_poliza') }}" class="btn btn-primary menu-btn"><i class="fas fa-search"></i> Consultar Pólizas</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="/imprimir-polizas" class="btn btn-primary menu-btn">Imprimir Pólizas</a>
+                    <a href="{{ url_for('Reimpresion_poliza') }}" class="btn btn-primary menu-btn"><i class="fas fa-print"></i> Imprimir Pólizas</a>
                 </div>
             </div>
         </div>
@@ -89,18 +110,19 @@
             <h2 class="category-title">Catálogos y Cuentas</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{ url_for('cuentas') }}" class="btn btn-success menu-btn">Catálogos Cuentas</a>
+                    <a href="{{ url_for('cuentas') }}" class="btn btn-success menu-btn"><i class="fas fa-book-open"></i> Catálogos Cuentas</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="/ingresar-saldos" class="btn btn-success menu-btn">Ingresar Saldos</a>
-                </div>
-                <a href="{{ url_for('presupuesto') }}" class="btn btn-success menu-btn">Presupuesto</a>
+                    <a href="{{ url_for('saldos_iniciales') }}" class="btn btn-success menu-btn"><i class="fas fa-dollar-sign"></i> Ingresar Saldos</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="/mayor" class="btn btn-success menu-btn">Mayor</a>
+                    <a href="{{ url_for('presupuesto') }}" class="btn btn-success menu-btn"><i class="fas fa-money-bill-wave"></i> Presupuesto</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="/mayor-res" class="btn btn-success menu-btn">Mayor Resumido</a>
+                    <a href="{{ url_for('Mayor') }}" class="btn btn-success menu-btn"><i class="fas fa-calculator"></i> Mayor</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ url_for('mayor_res') }}" class="btn btn-success menu-btn"><i class="fas fa-chart-bar"></i> Mayor Resultado</a>
                 </div>
             </div>
         </div>
@@ -110,7 +132,7 @@
             <h2 class="category-title">Gestión de Usuarios</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-dark menu-btn">Gestión de Usuarios</a>
+                    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-dark menu-btn"><i class="fas fa-user-cog"></i> Gestión de Usuarios</a>
                 </div>
             </div>
         </div>
@@ -120,14 +142,14 @@
             <h2 class="category-title">Ingreso Diario por Sucursal</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{ url_for('guardar_ingresos_egresos') }}" class="btn btn-secondary menu-btn">Ingreso Diario</a>
+                    <a href="{{ url_for('guardar_ingresos_egresos') }}" class="btn btn-secondary menu-btn"><i class="fas fa-calendar-alt"></i> Ingreso Diario</a>
                 </div>
             </div>
         </div>
 
         <!-- Opción para Salir -->
         <div class="menu-card text-center">
-            <a href="/" class="btn btn-danger menu-btn">Salir</a>
+            <a href="/" class="btn btn-danger menu-btn"><i class="fas fa-sign-out-alt"></i> Salir</a>
         </div>
     </div>
 

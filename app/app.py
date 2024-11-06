@@ -82,6 +82,34 @@ def polizas():
 def poliza_cheques():
     return render_template('poliza_cheques.html')
 
+@app.route('/poliza_diario')
+def poliza_diario():
+    return render_template('poliza_diario.html')
+
+@app.route('/edicion_de_poliza')
+def edicion_de_poliza():
+    return render_template('edicion_de_poliza.html')
+
+@app.route('/consultar_poliza')
+def consultar_poliza():
+    return render_template('consultar_poliza.html')
+
+@app.route('/Reimpresion_poliza')
+def Reimpresion_poliza():
+    return render_template('Reimpresion_poliza.html')
+
+@app.route('/saldos_iniciales')
+def saldos_iniciales():
+    return render_template('saldos_iniciales.html')
+
+@app.route('/Mayor')
+def Mayor():
+    return render_template('Mayor.html')
+
+@app.route('/mayor_res')
+def mayor_res():
+    return render_template('mayor_res.html')
+
 
 @app.route('/saldos_generales', methods=['GET', 'POST'])
 def saldos_generales():

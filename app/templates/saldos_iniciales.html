@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saldos Iniciales</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/5004735.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .card-container {
+            max-width: 500px;
+            margin: 100px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .card-title {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+        <h3 class="card-title">Movimientos del 1° al 31 de Diciembre del 2023</h3>
+
+        <!-- Formulario de Saldos Iniciales -->
+        <form>
+            <div class="form-group">
+                <label for="tipoCuenta">Tipo de Cuenta</label>
+                <select class="form-control" id="tipoCuenta">
+                    <option>ACTIVO</option>
+                    <option>PASIVO</option>
+                    <option>CAPITAL</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cuenta">Seleccione la Cuenta</label>
+                <select class="form-control" id="cuenta">
+                    <option>ADQUISICIÓN EDIFICIO</option>
+                    <!-- Agregar más opciones según sea necesario -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="saldoInicial">Ingrese Saldo Inicial</label>
+                <input type="number" class="form-control" id="saldoInicial" placeholder="Ingrese el saldo inicial">
+            </div>
+
+            <button type="submit" class="btn btn-submit">Ingresar</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
