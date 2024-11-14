@@ -75,7 +75,7 @@
             </div>
 
             <!-- Mensaje del período de la póliza -->
-            <div id="periodoMensaje" class="periodo-label">PÓLIZA DE CHEQUES DE 1o. AL 30 DE NOVIEMBRE DEL 2024</div>
+            <div id="periodoMensaje" class="periodo-label"></div>
 
             <div class="form-group">
                 <label for="cuenta">Seleccione la Cuenta</label>
@@ -142,6 +142,22 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Función para obtener el primer y último día del mes actual y mostrar en el mensaje de período
+        function actualizarPeriodoMensaje() {
+            const fechaActual = new Date();
+            const primerDia = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
+            const ultimoDia = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+
+            const opciones = { day: 'numeric', month: 'long', year: 'numeric' };
+            const primerDiaTexto = primerDia.toLocaleDateString('es-ES', opciones);
+            const ultimoDiaTexto = ultimoDia.toLocaleDateString('es-ES', opciones);
+
+            document.getElementById('periodoMensaje').textContent = `PÓLIZA DE CHEQUES DEL ${primerDiaTexto} AL ${ultimoDiaTexto}`;
+        }
+
+        // Ejecutar la función para mostrar el período al cargar la página
+        actualizarPeriodoMensaje();
+
         // Función para agregar detalles de cuenta a la tabla
         function agregarDetalle() {
             const cuenta = document.getElementById("cuenta").value;

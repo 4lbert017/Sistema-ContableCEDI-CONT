@@ -33,24 +33,24 @@
         }
 
         .form-control {
-        background-color: #d4f5e9; 
-        color: #212529; 
-        border: 1px solid #b2e0c5; 
-    }
+            background-color: #d4f5e9; 
+            color: #212529; 
+            border: 1px solid #b2e0c5; 
+        }
 
-    .form-control::placeholder {
-        color: #9ab8a3; 
-    }
+        .form-control::placeholder {
+            color: #9ab8a3; 
+        }
 
-    .form-control:read-only {
-        background-color: #e9faf1; 
-    }
+        .form-control:read-only {
+            background-color: #e9faf1; 
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center mt-5">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card p-4">
                     <div class="row text-center">
                         <div class="col-md-4">
@@ -69,7 +69,7 @@
                     <form method="POST" action="/guardar_ingresos_egresos">
                         <div class="row">
                             <!-- Ingresos -->
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5>INGRESOS</h5>
                                 <div class="mb-3">
                                     <label for="sucursal" class="form-label">Sucursal:</label>
@@ -77,14 +77,12 @@
                                         <option value="" disabled selected>Seleccione una sucursal</option>
                                         <option value="1">Sucursal 1</option>
                                         <option value="2">Sucursal 2</option>
-                                        <!-- Más sucursales según sea necesario -->
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="fecha" class="form-label">Fecha:</label>
                                     <input type="date" class="form-control" id="fecha" name="fecha">
-                                    
                                 </div>
 
                                 <div class="mb-3">
@@ -111,28 +109,10 @@
                                     <label for="mastografia" class="form-label">Mastografía:</label>
                                     <input type="number" class="form-control" id="mastografia" name="mastografia" placeholder="$">
                                 </div>
-
-                                <h6>Total por categoría:</h6>
-                                <div class="mb-3">
-                                    <label for="imagen" class="form-label">Imagen:</label>
-                                    <input type="number" class="form-control" id="imagen" name="imagen" placeholder="$" readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lab_total" class="form-label">Laboratorio:</label>
-                                    <input type="number" class="form-control" id="lab_total" name="lab_total" placeholder="$" readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="total_categoria" class="form-label">Suma de Imagen y Laboratorio:</label>
-                                    <input type="number" class="form-control" id="total_categoria" name="total_categoria" placeholder="$" readonly>
-                                </div>
-
-                        
                             </div>
 
                             <!-- Egresos -->
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5>EGRESOS</h5>
                                 <div class="mb-3">
                                     <label for="terminales" class="form-label">Terminales:</label>
@@ -153,16 +133,36 @@
                                     <label for="total_egresos" class="form-label">Total Egresos:</label>
                                     <input type="number" class="form-control" id="total_egresos" name="total_egresos" placeholder="$" readonly>
                                 </div>
+                            </div>
+
+                            <!-- Totales -->
+                            <div class="col-md-4">
+                                <h5>Total por categoría</h5>
+                                <div class="mb-3">
+                                    <label for="imagen" class="form-label">Imagen:</label>
+                                    <input type="number" class="form-control" id="imagen" name="imagen" placeholder="$" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="lab_total" class="form-label">Laboratorio:</label>
+                                    <input type="number" class="form-control" id="lab_total" name="lab_total" placeholder="$" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="total_categoria" class="form-label">Suma de Imagen y Laboratorio:</label>
+                                    <input type="number" class="form-control" id="total_categoria" name="total_categoria" placeholder="$" readonly>
+                                </div>
 
                                 <div class="mb-3">
                                     <label for="total_general" class="form-label">Total General:</label>
                                     <input type="number" class="form-control" id="total_general" name="total_general" placeholder="$" readonly>
                                 </div>
-                                <button type="submit" class="btn btn-success w-100">Guardar</button>
-                            </div>                    
+                                
+                                <button type="submit" class="btn btn-success w-100 mt-3">Guardar</button>
+                            </div>
                         </div>
                     </form>
-                    <a href="/menu" class="btn btn-secondary btn-exit">Salir</a>
+                    <a href="/menu" class="btn btn-secondary btn-exit mt-3">Salir</a>
                 </div>
             </div>
         </div>     
@@ -179,40 +179,40 @@
                 input.addEventListener('input', calcularTotales);
             });
 
-function calcularTotales() {
-    let totalIngresos = 0;
-    let totalEgresos = 0;
-    let totalGeneral = 0;
+            function calcularTotales() {
+                let totalIngresos = 0;
+                let totalEgresos = 0;
+                let totalGeneral = 0;
 
-    const ultrasonido = parseFloat(document.getElementById('ultrasonido').value) || 0;
-    const rayos_x = parseFloat(document.getElementById('rayos_x').value) || 0;
-    const electro = parseFloat(document.getElementById('electro').value) || 0;
-    const mastografia = parseFloat(document.getElementById('mastografia').value) || 0;
-    const laboratorio = parseFloat(document.getElementById('laboratorio').value) || 0;
-    const terminales = parseFloat(document.getElementById('terminales').value) || 0;
-    const depositos = parseFloat(document.getElementById('depositos').value) || 0;
-    const gastos_adicionales = parseFloat(document.getElementById('gastos_adicionales').value) || 0;
+                const ultrasonido = parseFloat(document.getElementById('ultrasonido').value) || 0;
+                const rayos_x = parseFloat(document.getElementById('rayos_x').value) || 0;
+                const electro = parseFloat(document.getElementById('electro').value) || 0;
+                const mastografia = parseFloat(document.getElementById('mastografia').value) || 0;
+                const laboratorio = parseFloat(document.getElementById('laboratorio').value) || 0;
+                const terminales = parseFloat(document.getElementById('terminales').value) || 0;
+                const depositos = parseFloat(document.getElementById('depositos').value) || 0;
+                const gastos_adicionales = parseFloat(document.getElementById('gastos_adicionales').value) || 0;
 
-    // Calcular total de ingresos
-    const totalImagen = ultrasonido + rayos_x + electro + mastografia;
-    totalIngresos = totalImagen + laboratorio;
+                // Calcular total de ingresos
+                const totalImagen = ultrasonido + rayos_x + electro + mastografia;
+                totalIngresos = totalImagen + laboratorio;
 
-    // Calcular total de egresos
-    totalEgresos = terminales + depositos + gastos_adicionales;
+                // Calcular total de egresos
+                totalEgresos = terminales + depositos + gastos_adicionales;
 
-    // Calcular total general
-    totalGeneral = totalIngresos - totalEgresos;
+                // Calcular total general
+                totalGeneral = totalIngresos - totalEgresos;
 
-    // Sumar Imagen y Laboratorio
-    const totalCategoria = totalImagen + laboratorio;
+                // Sumar Imagen y Laboratorio
+                const totalCategoria = totalImagen + laboratorio;
 
-    // Mostrar resultados
-    document.getElementById('imagen').value = totalImagen.toFixed(2); // Suma de la categoría Imagen
-    document.getElementById('lab_total').value = laboratorio.toFixed(2); // Total de laboratorio
-    document.getElementById('total_egresos').value = totalEgresos.toFixed(2); // Total de egresos
-    document.getElementById('total_general').value = totalGeneral.toFixed(2); // Total general
-    document.getElementById('total_categoria').value = totalCategoria.toFixed(2); // Suma de Imagen + Laboratorio
-}
+                // Mostrar resultados
+                document.getElementById('imagen').value = totalImagen.toFixed(2); // Suma de la categoría Imagen
+                document.getElementById('lab_total').value = laboratorio.toFixed(2); // Total de laboratorio
+                document.getElementById('total_egresos').value = totalEgresos.toFixed(2); // Total de egresos
+                document.getElementById('total_general').value = totalGeneral.toFixed(2); // Total general
+                document.getElementById('total_categoria').value = totalCategoria.toFixed(2); // Suma de Imagen + Laboratorio
+            }
 
         });
     </script>

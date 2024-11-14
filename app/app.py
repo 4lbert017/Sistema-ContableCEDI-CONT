@@ -110,6 +110,10 @@ def Mayor():
 def mayor_res():
     return render_template('mayor_res.html')
 
+@app.route('/Visualizar_IngresoDiario')
+def Visualizar_IngresoDiario():
+    return render_template('Visualizar_IngresoDiario.html')
+
 
 @app.route('/saldos_generales', methods=['GET', 'POST'])
 def saldos_generales():
@@ -118,6 +122,8 @@ def saldos_generales():
         saldo_tipo = request.form['saldo_tipo']
         return f"Procesando saldos del {year}, tipo {saldo_tipo}"
     return render_template('saldos_generales.html')
+
+
 
 @app.route('/balance_general', methods=['GET', 'POST'])
 def balance_general():
