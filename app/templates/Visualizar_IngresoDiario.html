@@ -53,126 +53,197 @@
             background-color: #0056b3;
             border-color: #0056b3;
         }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            color: #fff;
+        }
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+        .btn-exit {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .btn-exit:hover {
+            background-color: #5a6268;
+        }
     </style>
-    
-    
 </head>
 <body>
     <div class="container my-5">
         <h4>Visualización de Ingresos y Egresos</h4>
-        <div class="mb-4">
-            <label for="fecha" class="form-label">Seleccione una Fecha:</label>
-            <input type="date" class="form-control" id="fecha" name="fecha">
-            <button type="button" class="btn btn-primary mt-3" onclick="fetchData()">Buscar</button>
+        
+        <!-- Filtros -->
+        <div class="row mb-4">
+            <div class="col">
+                <label for="sucursal" class="form-label">Sucursal:</label>
+                <select class="form-control" id="sucursal" onchange="checkForm()">
+                    <option value="">Seleccionar Sucursal</option>
+                    <option value="Sucursal 1">Sucursal 1</option>
+                    <option value="Sucursal 2">Sucursal 2</option>
+                    <option value="Sucursal 3">Sucursal 3</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="mes" class="form-label">Mes:</label>
+                <select class="form-control" id="mes" onchange="checkForm()">
+                    <option value="">Seleccionar Mes</option>
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="anio" class="form-label">Año:</label>
+                <select class="form-control" id="anio" onchange="checkForm()">
+                    <option value="">Seleccionar Año</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+            </div>
         </div>
 
-        <!-- Tabla de Ingresos -->
-        <h5>Tabla Ingresos</h5>
-        <table class="table table-bordered">
+        <!-- Filtro por Fecha -->
+        <div class="mb-4">
+            <label for="fecha" class="form-label">Filtrar por fechas:</label>
+            <input type="date" class="form-control" id="fecha" name="fecha" onchange="checkForm()">
+        </div>
+
+        <!-- Tabla Combinada -->
+        <h5 class="mt-4">Tabla de Ingresos y Egresos</h5>
+        <table class="table table-bordered" id="tabla-combinada">
             <thead>
                 <tr>
-                    <th class="col-fecha">Fecha</th>
-                    <th class="col-servicio-imagen">Ultrasonido</th>
-                    <th class="col-servicio-imagen">Rayos X</th>
-                    <th class="col-servicio-imagen">Mastografía</th>
-                    <th class="col-servicio-imagen">Electro</th>
-                    <th class="col-laboratorio">Laboratorio</th>
-                    <th class="col-total-categoria">Total Imagen</th>
-                    <th class="col-total-categoria">Total Laboratorio</th>
-                    <th class="col-total">Total</th>
+                    <th>Fecha</th>
+                    <th>Ultrasonido</th>
+                    <th>Rayos X</th>
+                    <th>Mastografía</th>
+                    <th>Electro</th>
+                    <th>Total Imagen</th>
+                    <th>Total Laboratorio</th>
+                    <th>Terminal</th>
+                    <th>Depósito/Transferencia</th>
+                    <th>Gastos Adicionales</th>
+                    <th>Total General</th>
                 </tr>
             </thead>
-            <tbody id="tabla-ingresos">
-                <!-- Aquí se agregarán las filas con los datos de ingresos -->
+            <tbody>
+                <!-- Los datos aparecerán aquí después de hacer clic en Consultar -->
             </tbody>
         </table>
 
-        <!-- Tabla de Egresos -->
-        <h5>Tabla Egresos</h5>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="col-egreso-terminal">Egreso por Terminal</th>
-                    <th class="col-egreso-deposito">Egreso por Depósito/Transferencia</th>
-                    <th class="col-gastos-adicionales">Gastos Adicionales</th>
-                    <th class="col-total-ingresos">Total de Egresos</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-egresos">
-                <!-- Aquí se agregarán las filas con los datos de egresos -->
-            </tbody>
-        </table>
+        <!-- Botones -->
+        <div class="mt-4 text-center">
+            <button type="button" class="btn btn-secondary" id="consultar" onclick="consultar()" disabled>Consultar</button>
+            <button type="button" class="btn btn-info" onclick="printReport()">Imprimir Reporte</button>
+            <a href="/menu" class="btn btn-secondary btn-exit mt-3">Salir</a>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script para obtener y mostrar los datos -->
     <script>
-        function fetchData() {
+        function checkForm() {
+            const sucursal = document.getElementById('sucursal').value;
+            const mes = document.getElementById('mes').value;
+            const anio = document.getElementById('anio').value;
             const fecha = document.getElementById('fecha').value;
-            if (!fecha) {
-                alert("Por favor, seleccione una fecha.");
-                return;
+            
+            // Habilitar o deshabilitar el botón de consultar
+            const consultarButton = document.getElementById('consultar');
+            if (sucursal && mes && anio) {
+                consultarButton.disabled = false;  // Habilitar botón cuando los filtros son válidos
+            } else {
+                consultarButton.disabled = true;  // Deshabilitar botón si faltan filtros
+            }
+        }
+
+        function consultar() {
+            // Obtener los valores de los filtros
+            const sucursal = document.getElementById('sucursal').value;
+            const mes = document.getElementById('mes').value;
+            const anio = document.getElementById('anio').value;
+            const fecha = document.getElementById('fecha').value;
+
+            // Validar que todos los filtros estén seleccionados
+            if (!sucursal || !mes || !anio) {
+                alert("Por favor, seleccione todos los filtros (Sucursal, Mes, Año).");
+                return; // Detener la ejecución si faltan filtros
             }
 
-            // Aquí puedes realizar una llamada AJAX o fetch para obtener los datos de ingresos y egresos según la fecha seleccionada
-            // Simulación de datos para mostrar en las tablas
-            const ingresos = [
-                {
-                    fecha: fecha,
-                    ultrasonido: "$100",
-                    rayos_x: "$200",
-                    mastografia: "$150",
-                    electro: "$80",
-                    laboratorio: "$300",
-                    totalImagen: "$530",
-                    totalLaboratorio: "$300",
-                    total: "$830"
-                }
+            // Ejemplo de datos combinados para la tabla (esto normalmente vendría de un servidor)
+            const datos = [
+                { fecha: '2024-11-05', ultrasonido: "$100", rayos_x: "$200", mastografia: "$150", electro: "$80", totalImagen: "$530", totalLaboratorio: "$300", terminal: "$50", deposito: "$100", gastosAdicionales: "$30", totalGeneral: "$650" },
+                // Agregar más datos si es necesario
             ];
 
-            const egresos = [
-                {
-                    terminal: "$50",
-                    deposito: "$100",
-                    gastos_adicionales: "$30",
-                    totalEgresos: "$180"
-                }
-            ];
-
-            // Llenar tabla de ingresos
-            const ingresosTable = document.getElementById('tabla-ingresos');
-            ingresosTable.innerHTML = "";
-            ingresos.forEach(item => {
-                ingresosTable.innerHTML += `
+            // Llenar la tabla combinada con los datos
+            const tablaCombinada = document.getElementById('tabla-combinada').getElementsByTagName('tbody')[0];
+            tablaCombinada.innerHTML = ""; // Limpiar la tabla antes de llenarla
+            datos.forEach(item => {
+                tablaCombinada.innerHTML += `
                     <tr>
-                        <td class="col-fecha">${item.fecha}</td>
-                        <td class="col-servicio-imagen">${item.ultrasonido}</td>
-                        <td class="col-servicio-imagen">${item.rayos_x}</td>
-                        <td class="col-servicio-imagen">${item.mastografia}</td>
-                        <td class="col-servicio-imagen">${item.electro}</td>
-                        <td class="col-laboratorio">${item.laboratorio}</td>
-                        <td class="col-total-categoria">${item.totalImagen}</td>
-                        <td class="col-total-categoria">${item.totalLaboratorio}</td>
-                        <td class="col-total">${item.total}</td>
+                        <td>${item.fecha}</td>
+                        <td>${item.ultrasonido}</td>
+                        <td>${item.rayos_x}</td>
+                        <td>${item.mastografia}</td>
+                        <td>${item.electro}</td>
+                        <td>${item.totalImagen}</td>
+                        <td>${item.totalLaboratorio}</td>
+                        <td>${item.terminal}</td>
+                        <td>${item.deposito}</td>
+                        <td>${item.gastosAdicionales}</td>
+                        <td>${item.totalGeneral}</td>
                     </tr>
                 `;
             });
+        }
 
-            // Llenar tabla de egresos
-            const egresosTable = document.getElementById('tabla-egresos');
-            egresosTable.innerHTML = "";
-            egresos.forEach(item => {
-                egresosTable.innerHTML += `
-                    <tr>
-                        <td class="col-egreso-terminal">${item.terminal}</td>
-                        <td class="col-egreso-deposito">${item.deposito}</td>
-                        <td class="col-gastos-adicionales">${item.gastos_adicionales}</td>
-                        <td class="col-total-ingresos">${item.totalEgresos}</td>
-                    </tr>
-                `;
-            });
+        function printReport() {
+            // Imprimir la tabla combinada
+            const printContent = document.getElementById('tabla-combinada').outerHTML;
+            const originalContent = document.body.innerHTML;
+
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent; // Restaurar el contenido original
+        }
+
+        function logout() {
+            // Función para salir, por ejemplo, redirigir al login o cerrar sesión
+            alert("Saliendo...");
+            window.location.href = "/login";  // Ajusta esta URL según tu ruta de login
         }
     </script>
 </body>
