@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 from flask import jsonify
-
+from flask import  make_response
+from xhtml2pdf import pisa
+from io import BytesIO
 app = Flask(__name__)
 
 # Configuración de MySQL para flask_mysqldb
@@ -236,6 +238,39 @@ def eliminar_cuenta(id):
     cur.close()
     flash('Cuenta eliminada exitosamente')
     return redirect(url_for('cuentas'))
+
+@app.route('/generar_pdf')
+def generar_pdf():
+    # Obtener parámetros de la solicitud
+    sucursal = request.args.get('sucursal', 'Todas las Sucursales')
+    mes = request.args.get('mes', 'N/A')
+    anio = request.args.get('anio', 'N/A')
+
+    # Datos simulados (reemplaza con datos de tu base de datos)
+    datos = [
+        {'fecha': '2024-11-05', 'ultrasonido': "$100", 'rayos_x': "$200", 'mastografia': "$150",
+        'electro': "$80", 'totalImagen': "$530", 'totalLaboratorio': "$300", 'terminal': "$50",
+        'deposito': "$100", 'gastosAdicionales': "$30", 'totalGeneral': "$650"},
+    ]
+
+    # Renderizar la plantilla HTML para el PDF
+    rendered_html = render_template(
+        'reporte_pdf.html', sucursal=sucursal, mes=mes, anio=anio, datos=datos
+    )
+
+    # Convertir HTML a PDF usando xhtml2pdf
+    pdf_buffer = BytesIO()
+    pdf = pisa.CreatePDF(BytesIO(rendered_html.encode('utf-8')), pdf_buffer)
+
+    if pdf.err:
+        return "Error al generar el PDF", 500
+
+    # Devolver el PDF como respuesta
+    response = make_response(pdf_buffer.getvalue())
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = f'inline; filename=Reporte_{sucursal}_{mes}_{anio}.pdf'
+    return response
+
 
 if __name__ == '__main__':
     app.run(debug=True)

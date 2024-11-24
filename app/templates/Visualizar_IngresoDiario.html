@@ -165,7 +165,24 @@
         <!-- Botones -->
         <div class="mt-4 text-center">
             <button type="button" class="btn btn-secondary" id="consultar" onclick="consultar()" disabled>Consultar</button>
-            <button type="button" class="btn btn-info" onclick="printReport()">Imprimir Reporte</button>
+            <!-- Botón para generar PDF -->
+            <button type="button" class="btn btn-info" onclick="generarPDF()">Generar Reporte PDF</button>
+<script>
+    function generarPDF() {
+        const sucursal = document.getElementById('sucursal').value;
+        const mes = document.getElementById('mes').value;
+        const anio = document.getElementById('anio').value;
+
+        if (!sucursal || !mes || !anio) {
+            alert("Por favor, seleccione todos los filtros (Sucursal, Mes, Año).");
+            return;
+        }
+
+        // Redirige al servidor con los parámetros seleccionados
+        window.open(`/generar_pdf?sucursal=${sucursal}&mes=${mes}&anio=${anio}`, '_blank');
+    }
+</script>
+
             <a href="/menu" class="btn btn-secondary btn-exit mt-3">Salir</a>
         </div>
     </div>
@@ -230,15 +247,6 @@
             });
         }
 
-        function printReport() {
-            // Imprimir la tabla combinada
-            const printContent = document.getElementById('tabla-combinada').outerHTML;
-            const originalContent = document.body.innerHTML;
-
-            document.body.innerHTML = printContent;
-            window.print();
-            document.body.innerHTML = originalContent; // Restaurar el contenido original
-        }
 
         function logout() {
             // Función para salir, por ejemplo, redirigir al login o cerrar sesión

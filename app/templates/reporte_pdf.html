@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Asegura que los elementos estén en los extremos */
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .header img {
+            width: 80px; /* Ajusta el tamaño de los logos */
+            height: auto;
+        }
+        .center-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            flex-grow: 1; /* Hace que el título ocupe el espacio central */
+            margin: 0 10px; /* Espacio entre los logos y el título */
+        }
+        .info {
+            margin-top: 15px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 10px; /* Tamaño más pequeño */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 4px;
+            text-align: center;
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+        }
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- Logo izquierdo -->
+        <img src="D:/Sistema_Contable-RESIDENCIA-/SistemaContable/app/static/img/logo_cedicom.png" alt="Logo CEDICOM">
+        
+        <!-- Título centrado -->
+        <div class="center-title">
+            CEDICOM CENTRO DIAGNOSTICO DE COMALCALCO SA DE CV
+        </div>
+        
+        <!-- Logo derecho -->
+        <img src="D:/Sistema_Contable-RESIDENCIA-/SistemaContable/app/static/img/logo_ISO.png" alt="Logo ISO">
+    </div>
+    <div class="info">
+        <p><strong>Sucursal:</strong> {{ sucursal }}</p>
+        <p><strong>Mes:</strong> {{ mes }}</p>
+        <p><strong>Año:</strong> {{ anio }}</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Ultras.</th>
+                <th>Rayos X</th>
+                <th>Masto.</th>
+                <th>Electro</th>
+                <th>Total Img.</th>
+                <th>Total Lab.</th>
+                <th>Term.</th>
+                <th>Dep/Transf.</th>
+                <th>Gastos Adic.</th>
+                <th>Total Gral.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in datos %}
+            <tr>
+                <td>{{ item.fecha }}</td>
+                <td>{{ item.ultrasonido }}</td>
+                <td>{{ item.rayos_x }}</td>
+                <td>{{ item.mastografia }}</td>
+                <td>{{ item.electro }}</td>
+                <td>{{ item.totalImagen }}</td>
+                <td>{{ item.totalLaboratorio }}</td>
+                <td>{{ item.terminal }}</td>
+                <td>{{ item.deposito }}</td>
+                <td>{{ item.gastosAdicionales }}</td>
+                <td>{{ item.totalGeneral }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Página {{ page_num }} de {{ page_count }}</p>
+    </div>
+</body>
+</html>
