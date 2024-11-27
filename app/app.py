@@ -93,6 +93,10 @@ def poliza_diario():
 def consultar_poliza():
     return render_template('consultar_poliza.html')
 
+@app.route('/editarPoliza')
+def editar_poliza():
+    return render_template('editarPoliza.html')
+
 
 
 @app.route('/saldos_iniciales')

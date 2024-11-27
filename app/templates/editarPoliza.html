@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Póliza</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/5004735.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .card-container {
+            max-width: 800px;
+            margin: 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+        .table-container {
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .btn-add, .btn-save {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .periodo-label {
+            font-weight: bold;
+            color: #007bff;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+        <h3 class="card-title">Editar Póliza</h3>
+        
+        <!-- Formulario de Póliza de Diario -->
+        <form id="polizaForm">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="numeroPoliza">Número de Póliza</label>
+                    <input type="text" class="form-control" id="numeroPoliza" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" class="form-control" id="fecha" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="mes">Mes</label>
+                    <select class="form-control" id="mes">
+                        <option>noviembre 2024</option>
+                        <!-- Agregar otros meses si es necesario -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mensaje del período de la póliza -->
+            <div id="periodoMensaje" class="periodo-label">PÓLIZA DE DIARIO DE 1o. AL 30 DE NOVIEMBRE DEL 2024</div>
+
+            <div class="form-group">
+                <label for="cuenta">Seleccione la Cuenta</label>
+                <select class="form-control" id="cuenta">
+                    <option>% BIOPSIAS IMAGEN</option>
+                    <!-- Agregar más cuentas según sea necesario -->
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Tipo</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo" id="debe" value="debe">
+                        <label class="form-check-label" for="debe">Debe</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo" id="haber" value="haber">
+                        <label class="form-check-label" for="haber">Haber</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="importe">Importe</label>
+                    <input type="number" class="form-control" id="importe" placeholder="Ingrese el importe" required>
+                </div>
+                <div class="form-group col-md-4 align-self-end">
+                    <button type="button" class="btn btn-success btn-add" onclick="agregarDetalle()">Agregar</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="concepto">Concepto</label>
+                <input type="text" class="form-control" id="concepto" placeholder="Escribe el concepto" required>
+            </div>
+        </form>
+
+        <!-- Tabla de Detalles de Póliza -->
+        <div class="table-container">
+            <h5>Detalle de Póliza</h5>
+            <table class="table table-striped" id="detallePoliza">
+                <thead>
+                    <tr>
+                        <th>Póliza</th>
+                        <th>Fecha</th>
+                        <th>Cuenta</th>
+                        <th>Debe</th>
+                        <th>Haber</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los detalles se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between">
+                <strong id="sumaDebe">Suma Debe: $0.00</strong>
+                <strong id="sumaHaber">Suma Haber: $0.00</strong>
+            </div>
+        </div>
+
+        <!-- Botón Guardar -->
+        <button type="button" class="btn btn-primary btn-save mt-4" onclick="guardarPoliza()">Guardar Póliza</button>
+    </div>
+
+    <script>
+        // Cargar datos de la póliza seleccionada desde localStorage
+        window.onload = function() {
+            const poliza = JSON.parse(localStorage.getItem('polizaSeleccionada'));
+            if (poliza) {
+                document.getElementById("numeroPoliza").value = poliza.numero;
+                document.getElementById("fecha").value = poliza.fecha;
+                document.getElementById("concepto").value = poliza.concepto;
+                document.getElementById("cuenta").value = poliza.cuenta;
+            }
+        };
+
+        // Función para agregar detalles de cuenta a la tabla
+        function agregarDetalle() {
+            // Lógica para agregar detalles a la tabla
+        }
+
+        // Función para guardar la póliza
+        function guardarPoliza() {
+            alert("Póliza editada y guardada exitosamente.");
+            // Aquí puedes agregar la lógica para enviar los datos al backend
+        }
+    </script>
+</body>
+</html>

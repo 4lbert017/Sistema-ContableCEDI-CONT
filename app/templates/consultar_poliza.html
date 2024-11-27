@@ -28,26 +28,6 @@
             margin-bottom: 20px;
             color: #333;
         }
-        .radio-toolbar input[type="radio"] {
-            display: none;
-        }
-        .radio-toolbar label {
-            display: inline-block;
-            background-color: #f8f8f8;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-        .radio-toolbar input[type="radio"]:checked + label {
-            background-color: #ccc;
-            border-color: #bbb;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
         .table-container {
             margin-top: 20px;
             padding: 15px;
@@ -61,67 +41,51 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            Consulta de Pólizas
-        </div>
-        <div class="input-group">
-            <div class="radio-toolbar">
-                <input type="radio" id="todas" name="tipoPoliza" value="Todas" checked>
-                <label for="todas">Todas</label>
-                <input type="radio" id="ingreso" name="tipoPoliza" value="Poliza de Ingreso">
-                <label for="ingreso">Póliza de Ingreso</label>
-                <input type="radio" id="diario" name="tipoPoliza" value="Poliza Diario">
-                <label for="diario">Póliza Diario</label>
-                <input type="radio" id="cheque" name="tipoPoliza" value="Poliza de Cheque">
-                <label for="cheque">Póliza de Cheque</label>
-                <input type="radio" id="egresos" name="tipoPoliza" value="Poliza de Egresos">
-                <label for="egresos">Póliza de Egresos</label>
+        <div id="consultaPolizas">
+            <div class="header">
+                Consulta de Pólizas
             </div>
-        </div>
-        <div class="input-group">
-            <span>MES:</span>
-            <select id="mes" class="form-control mx-2">
-                <option>NOVIEMBRE</option>
-                <!-- Más opciones de mes -->
-            </select>
-            <span>AÑO:</span>
-            <select id="año" class="form-control mx-2">
-                <option>2024</option>
-                <!-- Más opciones de año -->
-            </select>
-            <input type="text" id="numero" class="form-control mx-2" placeholder="Número de Póliza">
-            <button class="btn btn-primary" onclick="cargarPolizas()">Cargar</button>
-        </div>
-        <div class="table-container">
-            <table class="table table-striped" id="listaPolizas">
-                <thead>
-                    <tr>
-                        <th>Número</th>
-                        <th>Fecha</th>
-                        <th>Tipo</th>
-                        <th>Cuenta</th>
-                        <th>Debe</th>
-                        <th>Haber</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Los datos se agregarán aquí dinámicamente -->
-                </tbody>
-            </table>
+            <div class="input-group">
+                <span>MES:</span>
+                <select id="mes" class="form-control mx-2">
+                    <option>NOVIEMBRE</option>
+                </select>
+                <span>AÑO:</span>
+                <select id="año" class="form-control mx-2">
+                    <option>2024</option>
+                </select>
+                <input type="text" id="numero" class="form-control mx-2" placeholder="Número de Póliza">
+                <button class="btn btn-primary" onclick="cargarPolizas()">Cargar</button>
+            </div>
+            <div class="table-container">
+                <table class="table table-striped" id="listaPolizas">
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Cuenta</th>
+                            <th>Debe</th>
+                            <th>Haber</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se agregarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function cargarPolizas() {
             const tbody = document.getElementById('listaPolizas').getElementsByTagName('tbody')[0];
             tbody.innerHTML = ''; // Clear existing rows
             const polizas = [
-                { numero: '001', fecha: '2024-11-01', tipo: 'Póliza de Ingreso', cuenta: '1000', debe: '5000', haber: '0' },
-                { numero: '002', fecha: '2024-11-02', tipo: 'Póliza Diario', cuenta: '2000', debe: '2000', haber: '2000' },
-                { numero: '003', fecha: '2024-11-03', tipo: 'Póliza de Cheque', cuenta: '3000', debe: '1500', haber: '1500' }
+                { numero: '001', fecha: '2024-11-01', tipo: 'Ingreso', cuenta: '1000', debe: '5000', haber: '0', concepto: 'Concepto de prueba 1' },
+                { numero: '002', fecha: '2024-11-02', tipo: 'Diario', cuenta: '2000', debe: '2000', haber: '2000', concepto: 'Concepto de prueba 2' },
+                { numero: '003', fecha: '2024-11-03', tipo: 'Cheque', cuenta: '3000', debe: '1500', haber: '1500', concepto: 'Concepto de prueba 3' }
             ];
             polizas.forEach(poliza => {
                 const tr = tbody.insertRow();
@@ -134,26 +98,32 @@
                 const actionsCell = tr.insertCell();
                 actionsCell.innerHTML = `
                     <button class="btn btn-info btn-sm btn-editar" onclick="editarPoliza('${poliza.numero}')">Editar</button>
-                    <button class="btn btn-success btn-sm btn-imprimir" onclick="imprimirPoliza('${poliza.numero}')">Imprimir</button>
-                    <button class="btn btn-danger btn-sm btn-eliminar" onclick="eliminarPoliza('${poliza.numero}')">Eliminar</button>
+                    <button class="btn btn-success btn-sm btn-imprimir">Imprimir</button>
+                    <button class="btn btn-danger btn-sm btn-eliminar">Eliminar</button>
                 `;
             });
         }
 
         function editarPoliza(numero) {
-            console.log(`Editando póliza número: ${numero}`);
-            // Implementar lógica de edición
+            const polizas = [
+                { numero: '001', fecha: '2024-11-01', tipo: 'Ingreso', cuenta: '1000', debe: '5000', haber: '0', concepto: 'Concepto de prueba 1' },
+                { numero: '002', fecha: '2024-11-02', tipo: 'Diario', cuenta: '2000', debe: '2000', haber: '2000', concepto: 'Concepto de prueba 2' },
+                { numero: '003', fecha: '2024-11-03', tipo: 'Cheque', cuenta: '3000', debe: '1500', haber: '1500', concepto: 'Concepto de prueba 3' }
+            ];
+            
+            // Busca la póliza seleccionada
+            const poliza = polizas.find(p => p.numero === numero);
+            if (poliza) {
+                // Guarda los datos en localStorage
+                localStorage.setItem('polizaSeleccionada', JSON.stringify(poliza));
+                // Redirige a la página de edición
+                window.location.href = '/editarPoliza';
+            } else {
+                alert('No se encontró la póliza seleccionada.');
+            }
         }
 
-        function imprimirPoliza(numero) {
-            console.log(`Imprimiendo póliza número: ${numero}`);
-            // Implementar lógica de impresión
-        }
-
-        function eliminarPoliza(numero) {
-            console.log(`Eliminando póliza número: ${numero}`);
-            // Implementar lógica de eliminación
-        }
+        cargarPolizas(); // Carga inicial
     </script>
 </body>
 </html>
