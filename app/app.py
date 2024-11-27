@@ -88,17 +88,12 @@ def poliza_cheques():
 def poliza_diario():
     return render_template('poliza_diario.html')
 
-@app.route('/edicion_de_poliza')
-def edicion_de_poliza():
-    return render_template('edicion_de_poliza.html')
 
 @app.route('/consultar_poliza')
 def consultar_poliza():
     return render_template('consultar_poliza.html')
 
-@app.route('/Reimpresion_poliza')
-def Reimpresion_poliza():
-    return render_template('Reimpresion_poliza.html')
+
 
 @app.route('/saldos_iniciales')
 def saldos_iniciales():
