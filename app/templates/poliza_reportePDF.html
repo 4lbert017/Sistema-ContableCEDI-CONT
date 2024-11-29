@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Póliza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header img {
+            width: 60px;
+            height: auto;
+        }
+        .title {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .info {
+            margin: 20px 0;
+            font-size: 12px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .totals {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 12px;
+        }
+        .totals p {
+            margin: 5px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <div class="header">
+        <img src="{{ url_for('static', filename='img/logo_cedicom.png') }}" alt="Logo Izquierdo">
+        <img src="{{ url_for('static', filename='img/logo_ISO.png') }}" alt="Logo Derecho">
+    </div>
+    
+    <!-- Título -->
+    <div class="title">
+        PÓLIZA DE INGRESOS
+    </div>
+
+    <!-- Información principal -->
+    <div class="info">
+        <p><strong>Fecha:</strong> {{ fecha }}</p>
+        <p><strong>Número de Póliza:</strong> {{ numero_poliza }}</p>
+        <p><strong>Concepto:</strong> {{ concepto }}</p>
+    </div>
+
+    <!-- Tabla de detalles -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cuenta</th>
+                    <th>Descripción</th>
+                    <th>Debe</th>
+                    <th>Haber</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in detalles %}
+                <tr>
+                    <td>{{ item.cuenta }}</td>
+                    <td>{{ item.descripcion }}</td>
+                    <td>{{ item.debe }}</td>
+                    <td>{{ item.haber }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Totales -->
+    <div class="totals">
+        <p><strong>Total Debe:</strong> {{ total_debe }}</p>
+        <p><strong>Total Haber:</strong> {{ total_haber }}</p>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="footer">
+        <p>Documento generado automáticamente por el sistema.</p>
+    </div>
+</body>
+</html>

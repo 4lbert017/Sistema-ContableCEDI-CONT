@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Saldos Generales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .sub-header {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .totals-row {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        .grand-total {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .highlight {
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <div class="header">
+        <div class="header-title">Saldos Generales - Reporte de Ingresos</div>
+        <div class="sub-header">Información de saldos por mes y servicios</div>
+    </div>
+
+    <!-- Tabla de Totales -->
+    <table>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Saldo</th>
+                <th>Haber</th>
+                <th>Debe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Datos Dinámicos -->
+            {% for mes, saldo, haber, debe in meses_data %}
+                <tr>
+                    <td>{{ mes }}</td>
+                    <td>{{ saldo }}</td>
+                    <td>{{ haber }}</td>
+                    <td>{{ debe }}</td>
+                </tr>
+            {% endfor %}
+            
+            <!-- Fila Total -->
+            <tr class="totals-row">
+                <td colspan="4">Totales: {{ total_saldo }} | {{ total_haber }} | {{ total_debe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Ingresos -->
+    <div class="highlight">INGRESOS</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Saldo</th>
+                <th>Haber</th>
+                <th>Debe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Datos Dinámicos -->
+            {% for mes, saldo, haber, debe in ingresos_data %}
+                <tr>
+                    <td>{{ mes }}</td>
+                    <td>{{ saldo }}</td>
+                    <td>{{ haber }}</td>
+                    <td>{{ debe }}</td>
+                </tr>
+            {% endfor %}
+            
+            <!-- Fila Total -->
+            <tr class="totals-row">
+                <td colspan="4">Totales: {{ total_saldo_ingresos }} | {{ total_haber_ingresos }} | {{ total_debe_ingresos }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Total General -->
+    <div class="grand-total">
+        Grand Total: {{ grand_total_saldo }} | {{ grand_total_haber }} | {{ grand_total_debe }}
+    </div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Saldos Generales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 80px;
+            height: auto;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .sub-header {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .totals-row {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        .highlight {
+            color: blue;
+            font-weight: bold;
+        }
+        .grand-total {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <div class="header">
+        <img src="{{ url_for('static', filename='img/logo_cedicom.png') }}" alt="Logo CEDICOM">
+        <div class="header-title">Saldos Generales</div>
+        <div class="sub-header">Correspondientes al período del 1o. al 30 de noviembre de 2024</div>
+    </div>
+
+    <!-- Tabla de Movimientos -->
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Fecha</th>
+                <th>Concepto</th>
+                <th>Debe</th>
+                <th>Haber</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movimiento in movimientos %}
+            <tr>
+                <td>{{ movimiento.numero }}</td>
+                <td>{{ movimiento.fecha }}</td>
+                <td>{{ movimiento.concepto }}</td>
+                <td>{{ movimiento.debe }}</td>
+                <td>{{ movimiento.haber }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Total de los movimientos -->
+    <div class="totals-row">
+        <p><strong>DEBE - HABER: ${{ debe_haber }}</strong></p>
+    </div>
+
+    <!-- Saldo Final -->
+    <div class="grand-total">
+        <p><strong>SALDO AL TÉRMINO DEL PERIODO: ${{ saldo_termino }}</strong></p>
+        <p>+ saldo del ejercicio anterior: ${{ saldo_anterior }}</p>
+        <p><strong>Saldo Total: ${{ saldo_total }}</strong></p>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="footer">
+        <p>Generado automáticamente por el sistema CEDICOM</p>
+    </div>
+</body>
+</html>

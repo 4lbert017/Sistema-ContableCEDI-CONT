@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Saldos Generales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 60px;
+            height: auto;
+        }
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .info {
+            font-size: 12px;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <img src="{{ url_for('static', filename='img/logo_cedicom.png', _external=True) }}" alt="Logo CEDICOM">
+        </div>
+        <div class="header-title">
+            CEDICOM CENTRO DIAGNOSTICO DE COMALCALCO SA DE CV
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='img/logo_ISO.png', _external=True) }}" alt="Logo ISO">
+        </div>
+    </div>
+
+    <div class="info">
+        <p><strong>Sucursal:</strong> {{ sucursal }}</p>
+        <p><strong>Mes:</strong> {{ mes }}</p>
+        <p><strong>Año:</strong> {{ anio }}</p>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cuenta</th>
+                    <th>Presupuesto Anual</th>
+                    <th>Presupuesto Mensual</th>
+                    <th>Saldo</th>
+                    <th>Diferencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in datos %}
+                <tr>
+                    <td>{{ item.cuenta }}</td>
+                    <td>{{ item.presupuesto_anual }}</td>
+                    <td>{{ item.presupuesto_mensual }}</td>
+                    <td>{{ item.saldo }}</td>
+                    <td>{{ item.diferencia }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>Página {{ page_num or 1 }} de {{ page_count or 1 }}</p>
+    </div>
+</body>
+</html>

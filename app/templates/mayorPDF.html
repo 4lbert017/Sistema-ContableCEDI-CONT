@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Movimientos - Caja Lab Aldama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 60px;
+            height: auto;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .sub-header {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .info {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+            font-weight: bold;
+        }
+        .totals-row {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        .highlight {
+            color: blue;
+            font-weight: bold;
+        }
+        .grand-total {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <div class="header">
+        <img src="{{ url_for('static', filename='img/logo_cedicom.png') }}" alt="Logo CEDICOM">
+        <div class="header-title">MOVIMIENTOS DEL 1o. AL 30 DE NOVIEMBRE DEL 2024</div>
+        <div class="sub-header">CEDICOM CENTRO DIAGNÓSTICO DE COMALCALCO S.A DE C.V</div>
+    </div>
+
+    <div class="sub-header">
+        <p><strong>Cuenta:</strong> CAJA LAB ALDAMA</p>
+    </div>
+
+    <div class="info">
+        <p><strong>RFC:</strong> CCD150507JI2</p>
+    </div>
+
+    <!-- Tabla de Movimientos -->
+    <table>
+        <thead>
+            <tr>
+                <th>Concepto</th>
+                <th>Debe</th>
+                <th>Haber</th>
+                <th>No.</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movimiento in movimientos %}
+            <tr>
+                <td>{{ movimiento.concepto }}</td>
+                <td>{{ movimiento.debe }}</td>
+                <td>{{ movimiento.haber }}</td>
+                <td>{{ movimiento.numero }}</td>
+                <td>{{ movimiento.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Totales -->
+    <div class="totals-row">
+        <p><strong>(Debe - Haber):</strong> ${{ total_debe_haber }}</p>
+    </div>
+
+    <!-- Saldo Final -->
+    <div class="grand-total">
+        <p><strong>SALDO AL TÉRMINO DEL PERIODO: ${{ saldo_periodo }}</strong></p>
+        <p>+ saldo del ejercicio anterior: ${{ saldo_anterior }}</p>
+        <p><strong>Saldo Total: ${{ saldo_total }}</strong></p>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="footer">
+        <p>Generado automáticamente por el sistema CEDICOM</p>
+    </div>
+</body>
+</html>
